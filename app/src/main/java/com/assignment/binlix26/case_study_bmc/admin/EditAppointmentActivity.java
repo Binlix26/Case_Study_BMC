@@ -163,8 +163,11 @@ public class EditAppointmentActivity extends AppCompatActivity implements Loader
 
         getContentResolver().insert(AppointmentEntry.CONTENT_URI, values);
 
-        Intent admin = new Intent(this, AdminActivity.class);
-        startActivity(admin);
+        // change screen
+        finish();
+
+//        Intent admin = new Intent(this, AdminActivity.class);
+//        startActivity(admin);
 
     }
 
@@ -187,8 +190,11 @@ public class EditAppointmentActivity extends AppCompatActivity implements Loader
 
         getContentResolver().update(AppointmentEntry.CONTENT_URI, values, selection, selectionArgs);
 
-        Intent admin = new Intent(this, AdminActivity.class);
-        startActivity(admin);
+        // change screen
+        finish();
+
+//        Intent admin = new Intent(this, AdminActivity.class);
+//        startActivity(admin);
     }
 
     @Override

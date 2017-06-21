@@ -129,8 +129,8 @@ public class VisitorCheckInActivity extends AppCompatActivity {
 
         if (purpose != null && purpose.length() > 0) {
             // set purpose spinner position
-            for(int indexOfPurpose = 0;indexOfPurpose<purposeList.size();indexOfPurpose++){
-                if(purposeList.get(indexOfPurpose).equals(visitor.getPurpose())){
+            for (int indexOfPurpose = 0; indexOfPurpose < purposeList.size(); indexOfPurpose++) {
+                if (purposeList.get(indexOfPurpose).equals(visitor.getPurpose())) {
                     spPurpose.setSelection(indexOfPurpose);
                     break;
                 }
@@ -159,13 +159,11 @@ public class VisitorCheckInActivity extends AppCompatActivity {
 
                         getContentResolver().update(VisitorEntry.CONTENT_URI, values, selection, arguments);
 
-                        Intent homePage;
-
-                        if (fromVisitor)
-                            homePage = new Intent(VisitorCheckInActivity.this, MainActivity.class);
-                        else
-                            homePage = new Intent(VisitorCheckInActivity.this, AdminActivity.class);
-                        startActivity(homePage);
+                        if (fromVisitor) {
+                            Intent homePage = new Intent(VisitorCheckInActivity.this, MainActivity.class);
+                            startActivity(homePage);
+                        } else
+                            finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
@@ -186,12 +184,10 @@ public class VisitorCheckInActivity extends AppCompatActivity {
 
         getContentResolver().update(VisitorEntry.CONTENT_URI, values, selection, arguments);
 
-        Intent homePage;
-
-        if (fromVisitor)
-            homePage = new Intent(VisitorCheckInActivity.this, MainActivity.class);
-        else
-            homePage = new Intent(VisitorCheckInActivity.this, AdminActivity.class);
-        startActivity(homePage);
+        if (fromVisitor) {
+            Intent homePage = new Intent(VisitorCheckInActivity.this, MainActivity.class);
+            startActivity(homePage);
+        } else
+            finish();
     }
 }

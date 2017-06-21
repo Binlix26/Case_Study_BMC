@@ -161,8 +161,10 @@ public class EditStaffActivity extends AppCompatActivity {
 
         getContentResolver().update(StaffEntry.CONTENT_URI, values, selection, selectionArgs);
 
-        Intent admin = new Intent(this, AdminActivity.class);
-        startActivity(admin);
+        finish();
+
+//        Intent admin = new Intent(this, AdminActivity.class);
+//        startActivity(admin);
     }
 
     private void insertStaff() {
@@ -183,8 +185,10 @@ public class EditStaffActivity extends AppCompatActivity {
 
         getContentResolver().insert(StaffEntry.CONTENT_URI, values);
 
-        Intent admin = new Intent(this, AdminActivity.class);
-        startActivity(admin);
+        finish();
+
+//        Intent admin = new Intent(this, AdminActivity.class);
+//        startActivity(admin);
     }
 
     // If you want to return the image taken, by the trigger above
