@@ -21,6 +21,7 @@ public class Utility {
     public static List<String> purposeList = Arrays.asList("General Business", "Drop In", "Scheduled Appointment", "Other");
     public static List<String> visitorListFilter = Arrays.asList("All", "Check In", "Check Out");
     public static Bitmap bitmap;
+    public static String password;
 
     public static String getCurrentTimeAsString(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

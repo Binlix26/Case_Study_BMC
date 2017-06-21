@@ -19,6 +19,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/change_password"
+        android:orderInCategory="100"
+        android:title="Change Password"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/log_out"
         android:orderInCategory="100"
         android:title="Log Out"

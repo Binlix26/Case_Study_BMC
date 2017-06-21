@@ -18,6 +18,7 @@ import static com.assignment.binlix26.case_study_bmc.data.BMCContract.Appointmen
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.CHECKOUT;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.StaffEntry;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.VisitorEntry;
+import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PasswordEntry;
 
 
 /**
@@ -64,6 +65,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " FOREIGN KEY(" + AppointmentEntry.COLUMN_STAFF + ") REFERENCES " + StaffEntry.TABLE_NAME + "(" + StaffEntry._ID + ") " +
                     ")";
 
+    private static final String TABLE_PASSWORD_CREATE =
+            "CREATE TABLE " + PasswordEntry.TABLE_NAME + " (" +
+                    PasswordEntry._ID + " INTEGER PRIMARY KEY, " +
+                    PasswordEntry.COLUMN_PASSWORD + " TEXT " +
+                    ")";
+
     /*private static final String TABLE_CHECK_IN_CREATE =
             "CREATE TABLE " + CheckInEntry.TABLE_NAME + " (" +
                     CheckInEntry._ID + " INTEGER PRIMARY KEY, " +
@@ -84,6 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_VISITOR_CREATE);
         db.execSQL(TABLE_STAFF_CREATE);
         db.execSQL(TABLE_APPOINTMENT_CREATE);
+        db.execSQL(TABLE_PASSWORD_CREATE);
 //        db.execSQL(TABLE_CHECK_IN_CREATE);
         // put some data
         initDB(db);
@@ -95,6 +103,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         ContentValues values = new ContentValues();
+
+        // password
+        values.put(PasswordEntry.COLUMN_PASSWORD, "admin");
+        db.insert(PasswordEntry.TABLE_NAME, null, values);
+        values.clear();
 
         // visitor tables
         values.put(VisitorEntry.COLUMN_NAME, "Bin Li");

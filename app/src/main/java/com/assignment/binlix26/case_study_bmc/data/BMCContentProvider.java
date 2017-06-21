@@ -15,10 +15,12 @@ import android.util.Log;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.AppointmentEntry;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.CONTENT_AUTHORITY;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PATH_APPOINTMENT;
+import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PATH_PASSWORD;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PATH_STAFF;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PATH_VISITOR;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.StaffEntry;
 import static com.assignment.binlix26.case_study_bmc.data.BMCContract.VisitorEntry;
+import static com.assignment.binlix26.case_study_bmc.data.BMCContract.PasswordEntry;
 
 /**
  * Created by binlix26 on 11/06/17.
@@ -32,6 +34,8 @@ public class BMCContentProvider extends ContentProvider {
     private static final int VISITOR_ID = 12;
     private static final int APPOINTMENT = 21;
     private static final int APPOINTMENT_ID = 22;
+    private static final int PASSWORD = 31;
+    private static final int PASSWORD_ID = 32;
 //    private static final int CHECK_IN = 31;
 //    private static final int CHECK_IN_ID = 32;
 
@@ -54,6 +58,9 @@ public class BMCContentProvider extends ContentProvider {
 
         uriMatcher.addURI(CONTENT_AUTHORITY, PATH_APPOINTMENT, APPOINTMENT);
         uriMatcher.addURI(CONTENT_AUTHORITY, PATH_APPOINTMENT + "/#", APPOINTMENT_ID);
+
+        uriMatcher.addURI(CONTENT_AUTHORITY, PATH_PASSWORD, PASSWORD);
+        uriMatcher.addURI(CONTENT_AUTHORITY, PATH_PASSWORD + "/#", PASSWORD_ID);
 
 //        uriMatcher.addURI(CONTENT_AUTHORITY, PATH_CHECK_IN_FORM, CHECK_IN);
 //        uriMatcher.addURI(CONTENT_AUTHORITY, PATH_CHECK_IN_FORM + "/#", CHECK_IN_ID);
@@ -142,6 +149,28 @@ public class BMCContentProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
+            case PASSWORD:
+                cursor = database.query(
+                        PasswordEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case PASSWORD_ID:
+                _id = ContentUris.parseId(uri);
+                cursor = database.query(PasswordEntry.TABLE_NAME,
+                        projection,
+                        PasswordEntry._ID + " = ?",
+                        new String[]{String.valueOf(_id)},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
             case APPOINTMENT:
                 builder = new SQLiteQueryBuilder();
                 builder.setTables(app_join);
@@ -208,6 +237,8 @@ public class BMCContentProvider extends ContentProvider {
                 return insertRow(uri, values, VisitorEntry.TABLE_NAME);
             case STAFF:
                 return insertRow(uri, values, StaffEntry.TABLE_NAME);
+            case PASSWORD:
+                return insertRow(uri, values, PasswordEntry.TABLE_NAME);
             case APPOINTMENT:
                 return insertRow(uri, values, AppointmentEntry.TABLE_NAME);
 
@@ -246,6 +277,9 @@ public class BMCContentProvider extends ContentProvider {
             case STAFF:
                 rows = database.delete(StaffEntry.TABLE_NAME, selection, selectionArgs);
                 break;
+            case PASSWORD:
+                rows = database.delete(PasswordEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             case APPOINTMENT:
                 rows = database.delete(AppointmentEntry.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -277,6 +311,9 @@ public class BMCContentProvider extends ContentProvider {
                 break;
             case STAFF:
                 rows = database.update(StaffEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case PASSWORD:
+                rows = database.update(PasswordEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case APPOINTMENT:
                 rows = database.update(AppointmentEntry.TABLE_NAME, values, selection, selectionArgs);

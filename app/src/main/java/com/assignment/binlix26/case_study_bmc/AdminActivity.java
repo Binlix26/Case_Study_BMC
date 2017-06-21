@@ -1,6 +1,7 @@
 package com.assignment.binlix26.case_study_bmc;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,10 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.assignment.binlix26.case_study_bmc.admin.EditAppointmentActivity;
 import com.assignment.binlix26.case_study_bmc.admin.EditStaffActivity;
 import com.assignment.binlix26.case_study_bmc.admin.EditVisitorActivity;
+import com.assignment.binlix26.case_study_bmc.data.BMCContract.PasswordEntry;
+import com.assignment.binlix26.case_study_bmc.utility.Utility;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -71,7 +78,66 @@ public class AdminActivity extends AppCompatActivity {
                 addApp.putExtra("exist", false);
                 startActivity(addApp);
                 return true;
+            case R.id.change_password:
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+                alert.setTitle("Change Password");
+                //alert.setMessage("Enter your new password");
+
+                LinearLayout layout = new LinearLayout(this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                // Set an EditText view to get user input
+                final EditText inputText1 = new EditText(this);
+                inputText1.setHint("New Password");
+                layout.addView(inputText1);
+
+                final EditText inputText2 = new EditText(this);
+                inputText2.setHint("Confirmation");
+                layout.addView(inputText2);
+
+                final TextView prompt = new TextView(this);
+                layout.addView(prompt);
+
+                alert.setView(layout);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        String value1 = inputText1.getText().toString();
+                        String value2 = inputText2.getText().toString();
+
+                        if (value1 != null && value2 !=null &&
+                                value1.equals(value2) && value1.length() > 0) {
+                            Utility.password = value1;
+
+                            String selection = PasswordEntry._ID + "=?";
+                            String[] selectionArgs = new String[]{
+                                    String.valueOf(1)
+                            };
+
+                            ContentValues values = new ContentValues();
+                            values.put(PasswordEntry.COLUMN_PASSWORD, value1);
+
+                            getContentResolver().update(PasswordEntry.CONTENT_URI, values, selection, selectionArgs);
+
+                            Toast.makeText(getApplicationContext(),"Password changed!",Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Password does not match, no changes made!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+
+                alert.show();
+
+                return true;
             case R.id.log_out:
                 Intent homePage = new Intent(this, MainActivity.class);
                 startActivity(homePage);

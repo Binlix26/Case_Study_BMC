@@ -15,6 +15,7 @@ public class BMCContract {
     public static final String PATH_STAFF = "staff";
     public static final String PATH_VISITOR = "visitor";
     public static final String PATH_APPOINTMENT = "appointment";
+    public static final String PATH_PASSWORD = "password";
 //    public static final String PATH_CHECK_IN_FORM = "check_in";
 
     public static final Integer CHECKOUT = 0;
@@ -77,6 +78,21 @@ public class BMCContract {
         public static final String COLUMN_STAFF = "app_staff";
 
         public static Uri buildAppointmentUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+
+    public static final class PasswordEntry implements BaseColumns {
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath((PATH_PASSWORD)).build();
+
+        // table name
+        public static final String TABLE_NAME = "PASSWORD";
+
+        // only on column
+        public static final String COLUMN_PASSWORD = "password";
+
+        public static Uri buildPasswordUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }

@@ -22,7 +22,6 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        android:hint="Mobile phone number"
         android:textColorHint="@color/mdtp_white" />
 
     <TextView

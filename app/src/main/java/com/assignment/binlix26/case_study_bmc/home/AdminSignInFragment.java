@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.assignment.binlix26.case_study_bmc.AdminActivity;
 import com.assignment.binlix26.case_study_bmc.R;
+import com.assignment.binlix26.case_study_bmc.utility.Utility;
 
 /**
  * Created by binlix26 on 15/06/17.
@@ -20,7 +21,6 @@ import com.assignment.binlix26.case_study_bmc.R;
 
 public class AdminSignInFragment extends Fragment {
 
-    private static final String PASSWORD = "ad";
     EditText adminPasswordInput;
     Button adminSignInButton;
 
@@ -40,9 +40,6 @@ public class AdminSignInFragment extends Fragment {
                 }
         );
 
-
-
-
         return view;
     }
 
@@ -52,7 +49,7 @@ public class AdminSignInFragment extends Fragment {
         //If they cant be found it will call another method to display a pop up box saying the info is incorect could not be found
         String password = adminPasswordInput.getText().toString();
 
-        if (password!=null && password.equals(PASSWORD)) {
+        if (password!=null && password.equals(Utility.password)) {
             Intent intent = new Intent(getContext(), AdminActivity.class);
             startActivity(intent);
         } else {
