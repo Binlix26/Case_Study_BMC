@@ -4,6 +4,7 @@
 
 <p>
 It is designed for helping the staffs at reception keep on track with every visitor come along, manage appointment and staff information.
+Designed for Tablet
 </p>
 
 <h3>Core Techniques</h3>
